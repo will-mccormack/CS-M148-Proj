@@ -22,7 +22,22 @@ v. how to use the code for your project on the data set.
 
 i. Explain the exploratory data analysis that you conducted. What was done to visualize your data and split your data for training and testing? 
 
+EDA Summary
+- Loaded dataset from HuggingFace.
+- Plotted genre-level mean popularity to understand group differences.
+- Examined outlier genres such as “comedy.”
+- Inspected distribution of features and correlations using visualization tools.
+- Created a train–test split (80/20) for unbiased evaluation.
+
 ii. What data pre-processing and feature engineering (or data augmentation) did you complete on your project? 
+
+Pre-Processing & Feature Engineering Summary
+- Encoded categorical variables (e.g., genre).
+- Removed low-frequency genres and irrelevant text features.
+- Standardized numerical acoustic features.
+- Dropped or imputed missing values.
+- Optionally created a binary popularity label for classification.
+- Prepared cleaned matrices X_train, X_test, y_train, y_test for modeling.
 
 iii. How was regression analysis applied in your project? What did you learn about your data set from this analysis and were you able to use this analysis for feature importance? Was regularization needed? 
 
