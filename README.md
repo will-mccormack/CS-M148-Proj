@@ -3,9 +3,15 @@ Your main document can be a readme explaining:
 
 i. the data set your team used 
 
+We used the Spotify Prediction Dataset.
+
 ii. the overview of the problem your team addressed 
 
-iii. the key methodology that worked to address the problem with explanations as to why 
+We investigated and evaulated various statistical methods to determine what characteristics of songs found on Spotify represent predictors of popularity, measured by Spotify's Popularity score, a 1-100 label assigned to every track in Spotify's database.
+
+iii. the key methodology that worked to address the problem with explanations as to why
+
+- 
 
 iv. results including cross-validation used and evaluation metrics and conclusions such as why you chose the key method and its limitations 
 
