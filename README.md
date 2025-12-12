@@ -24,7 +24,7 @@ The neural network achieved the lowest validation RMSE and highest R-squared amo
 
 ## How to Use the Code [Final]
 
-All project code is available in the GitHub repository and can be run through Jupyter. The main workflow is contained in Final_Project_Main.ipynb, which loads the prepared datasets, applies preprocessing steps, and fits the primary models including Ridge regression and the neural network. Running this notebook in full will reproduce the results and evaluation metrics we report. Additional notebooks in our repository document some intermediate experiments but in general are not a signficant part of our final workflow.
+All project code is available in the GitHub repository and can be run through Jupyter. The main workflow is contained in Final_Project_Main.ipynb, which loads the prepared datasets, applies preprocessing steps, and fits the primary models, regression and the neural network. Running this notebook in full will reproduce the results and evaluation metrics we report. Additional notebooks in our repository document some intermediate experiments but in general are not a signficant part of our final workflow.
 
 
 (b) Appendix:
