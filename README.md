@@ -129,12 +129,12 @@ R2 Score: 0.588. Our model explains approximately 59% of the variance in a song'
 
 We selected the Neural Network as our final model because it demonstrated a superior ability to capture the non-linear complexity of the music market.
 
-Failure of Linear Models: Our initial baseline experiments with Linear and Ridge Regression yielded R2 scores below 0.30. These models assume a straightforward relationship (e.g., "louder is always better"), which fails in music where context matters (e.g., high loudness is good for Rock but bad for Classical).
+Failure of Linear Models: Our initial baseline experiments with Linear and Ridge Regression yielded lower R2 scores.
 
-Success of Neural Networks: By using non-linear activation functions (SiLU) and deep layers, the Neural Network learned these complex feature interactions. This capability allowed us to double the predictive power compared to regression (0.29→0.59), proving that the relationship between sound and popularity is highly non-linear.
+Success of Neural Networks: By using non-linear activation functions (SiLU) and deep layers, the Neural Network learned these complex feature interactions. This capability allowed us toimprove the predictive power compared to regression, showing that the relationship between sound and popularity can be non-linear.
 
 Limitations: Despite being our best performer, the Neural Network approach has inherent limitations:
-- Interpretability: Unlike linear regression, where we can look at coefficients to say "Loudness is the #1 factor," the Neural Network is a "black box." It is difficult to isolate exactly why it predicts a specific score for a specific song.
+- Interpretability: Unlike linear regression, where we can look at coefficients to say which features are the most important, the Neural Network is a "black box." It is difficult to isolate exactly why it predicts a specific score for a specific song.
 - The "Data Ceiling": Our performance plateaued at an R2 of ~0.60 regardless of architecture changes. This indicates a limitation of the dataset itself rather than the model. Audio features alone cannot account for external factors like marketing budgets, artist fame, release timing, and cultural trends, which likely drive the remaining 40% of the variance.
 
 ## How to Use the Code [Final]
