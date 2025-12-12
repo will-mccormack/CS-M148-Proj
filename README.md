@@ -21,24 +21,25 @@ All project code is available in the GitHub repository and can be run directly t
 
 (b) Appendix: In the appendix you will discuss the methods that you applied to reach your final project goal from the check-ins. You should use this as a check-list to make sure you discuss all of these aspects of your work either in your main report or appendix. If a method is the key method in the main document, you can just mention that it is discussed in the main document. 
 
-i. Explain the exploratory data analysis that you conducted. What was done to visualize your data and split your data for training and testing? 
+(i) Exploratory Data Analysis
 
-EDA Summary
-- Loaded dataset from HuggingFace.
-- Plotted genre-level mean popularity to understand group differences.
-- Examined outlier genres such as “comedy.”
-- Inspected distribution of features and correlations using visualization tools.
-- Created a train–test split (80/20) for unbiased evaluation.
+We conducted exploratory data analysis to understand the distributions of Spotify audio features and their relationships with the target variables, explicit and popularity. We first examined the distributions of continuous audio features such as danceability, energy, loudness, tempo, and valence using histograms and summary statistics. These plots showed substantial differences in scale and variance across features, as well as skewed distributions for some variables, indicating that feature scaling would be necessary for downstream modeling.
 
-ii. What data pre-processing and feature engineering (or data augmentation) did you complete on your project? 
+We then explored the target variables directly. For the classification task, we inspected the distribution of the binary explicit label and observed moderate class imbalance, which informed the choice of evaluation metrics beyond accuracy. For the regression task, we examined the distribution of popularity scores and their relationships with selected audio features using scatter plots, which suggested weak but non-linear relationships rather than a single dominant predictor.
 
-Pre-Processing & Feature Engineering Summary
-- Encoded categorical variables (e.g., genre).
-- Removed low-frequency genres and irrelevant text features.
-- Standardized numerical acoustic features.
-- Dropped or imputed missing values.
-- Optionally created a binary popularity label for classification.
-- Prepared cleaned matrices X_train, X_test, y_train, y_test for modeling.
+We also analyzed structural properties of the dataset. Tracks often appeared multiple times with identical audio features but different genre labels, indicating redundancy in the raw data. In addition, the combination of many audio features with categorical genre information implied a high-dimensional feature space with potential multicollinearity. These observations motivated later preprocessing steps including feature selection, dimensionality reduction, and careful train–test splitting. For model evaluation, the data was split into training and validation or test sets, and cross-validation was used for the classification task to assess generalization performance.
+
+(ii) Data Pre-processing and Feature Engineering
+
+Preprocessing was guided by the issues identified during EDA and the requirements of the models used. We first cleaned the data by removing low-signal or redundant metadata columns such as key and time_signature. The explicit label was converted to a binary integer representation to ensure compatibility with classification models.
+
+Categorical genre information was encoded using one-hot encoding, which increased the dimensionality of the feature space. To address redundancy, duplicate tracks with identical audio features were grouped together and their genre indicators were merged, preserving multi-genre information while reducing repeated observations and limiting potential data leakage across splits.
+
+All continuous features were scaled prior to modeling to account for differences in feature magnitude. This step was necessary for distance-based methods, principal component analysis (PCA), and neural network training. PCA was applied after scaling and fit only on the training data to reduce dimensionality and mitigate multicollinearity among audio features. The explained variance ratios were examined to confirm that the transformed feature space retained most of the original variance.
+
+Finally, the processed features were used to construct consistent training and testing datasets for both classical machine learning models and neural networks. No synthetic data augmentation was performed; feature engineering focused on improving representation quality and model stability rather than expanding the dataset.
+
+***TODO:***
 
 iii. How was regression analysis applied in your project? What did you learn about your data set from this analysis and were you able to use this analysis for feature importance? Was regularization needed? 
 
