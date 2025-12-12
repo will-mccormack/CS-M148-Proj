@@ -6,7 +6,6 @@ For our project, we selected the Spotify Prediction Dataset, sourced from Spotif
 
 Our primary goal for this project is to develop a model that can predict track popularity, using audio features as our predictor variables. This task is highly complex, as there are dozens of factors that contribute to a track’s popularity, many of which are not included in the dataset (for example, the extent to which a song is promoted prior to release would likely have influence on its popularity; our analysis won’t be able to capture this). Given the limiting nature of solely relying on genre and audio features, the objective becomes identifying data variables that demonstrate a consistent association with popularity. We are also interested to see how different modeling approaches handle this noisy setting.
 
-
 ## Key Methodology [UPDATES NEEDED]
 
 Throughout our analysis, we explored several models of varying complexity and type with the goal of ultimately cross-referencing key model performance metrics across model types to identify the highest performing model. The models include several linear models as well as a neural network. Our Ordinary Least Squares regression model had the most predictive power/strongest interpretability across our linear models.
