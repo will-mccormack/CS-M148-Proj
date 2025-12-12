@@ -21,7 +21,9 @@ Structural analysis revealed that many tracks appeared multiple times with ident
 
 ### Data Pre-processing and Feature Engineering
 
-Preprocessing steps were informed by exploratory findings and model requirements. Low-signal metadata columns were removed, and categorical genre information was encoded using one-hot encoding. Duplicate tracks with identical audio features were grouped together, and their genre indicators were merged to reduce redundancy while preserving multi-genre information.
+Preprocessing steps were informed by exploratory findings and model requirements. Low-signal metadata columns were removed, and categorical genre information was encoded using one-hot encoding. Duplicate tracks with identical audio features were grouped together, and their genre indicators were merged to reduce redundancy while preserving multi-genre information. In addition, after going thorugh the data pipeline, we evaluated the popularity metric and decided that values less than 5 contributed to noise, since the popularity metric algorithm is a measure of current popularity, without factoring in historical popularity which causes older songs as well as brand new songs to have an abnormally low popularity score. To deal with this noise, these songs are removed to allow a more predictable model to be trained.
+
+<img width="850" height="547" alt="image" src="https://github.com/user-attachments/assets/f81c929a-c79a-4143-a19a-178e3c2e71b1" />
 
 All continuous features were standardized prior to modeling. PCA was applied after scaling and fit only on the training data to reduce dimensionality and mitigate multicollinearity, particularly for neural network training. The resulting feature representations were used consistently across training and validation sets. No synthetic data augmentation was performed; feature engineering focused on improving representation quality and stability.
 
@@ -53,7 +55,7 @@ The process for Ridge regularization is the same as Lasso regularization, but in
 
 #### Neural Networks
 
-We also trained a feedforward neural network to capture nonlinear relationships between audio features and popularity. We applied PCA to scaled features before neural network training to mitigate the effects of the data’s inherent high-dimensionality as well as the dimensionality increase caused by genre encoding. We trained the neural network using a validation set with early stopping and performed hyperparameter tuning to determine an optimal learning rate. 
+We also trained a feedforward neural network to capture nonlinear relationships between audio features and popularity. We applied PCA to scaled features before neural network training to mitigate the effects of the data’s inherent high-dimensionality as well as the dimensionality increase caused by genre encoding. From our testing we evaluated that 80% of the explained variance ratio can allow us reduce dimensionality without compromising the performance of our model. We trained the neural network using a validation set with early stopping and performed hyperparameter tuning to determine an optimal learning rate. 
 
 Note that feature importance involving regularization was applied when Lasso and Ridge regularization were applied, but not the unregularized models, where keeping more features were favored over reducing complexity.
 
@@ -112,7 +114,13 @@ Based on the metrics obtained, Ordinary Least Squares provides the best predicti
 
 ##### Neural Network
 
-The neural network achieved the lowest validation RMSE and highest R-squared among the models considered, indicating, as expected that nonlinear interactions and genre effects contribute additionally towards full predictive power. However, overall R-squared values remained moderate, reflecting the inherent limitations of predicting popularity from audio features alone. For this reason, the neural network is treated as the strongest predictive model within the scope of the dataset.
+The neural network achieved a respectable validation RMSE of 11.27 and highest R-squared among the models considered, with a value of 0.5901, indicating, as expected that nonlinear interactions and genre effects contribute additionally towards full predictive power. However, overall R-squared values remained moderate, reflecting the inherent limitations of predicting popularity from audio features alone, without factoring artist or popularity trends over years. For this reason, the neural network is treated as the strongest predictive model within the scope of the dataset.
+
+<img width="850" height="547" alt="image" src="https://github.com/user-attachments/assets/5816bc82-b73a-44b6-9546-8aa63603b8e3" />  
+
+We utilized 5-Fold Cross-Validation to verify the robustness of our Neural Network. The results show a stable convergence profile (narrow standard deviation bands), confirming that the model's architecture is resilient to variations in the training data. The persistent but stable gap between training and validation loss highlights that the model has reached the predictive ceiling for this feature set without suffering from catastrophic overfitting.
+
+<img width="859" height="547" alt="image" src="https://github.com/user-attachments/assets/8e86c5d8-da44-4cd1-9e42-c392472225b9" />
 
 ## How to Use the Code [Final]
 
@@ -135,9 +143,17 @@ Please refer to the main document for data pre-processing and feature engineerin
 
 Please refer to the main document for a discussion of how regression analysis was applied to the project.
 
-iv. How was logistic regression analysis applied in your project? What did you learn about your data set from this analysis and were you able to use this analysis for feature importance? Was regularization needed? v. How were KNN, decision trees, or random forest used for classification on your data? What method worked best for your data and why was it good for the problem you were addressing? 
+iv. How was logistic regression analysis applied in your project? What did you learn about your data set from this analysis and were you able to use this analysis for feature importance? Was regularization needed?
+
+Logistic regression was applied as a binary classification framework to distinguish between "popular" and "unpopular" tracks, utilizing a specific threshold to binarize the continuous popularity score. To address the dataset's imbalance, where unpopular songs significantly outnumber hits, the model employed class_weight='balanced', which adjusts the loss function to penalize misclassifying the minority class more heavily. The analysis was validated using 5-Fold Cross-Validation, yielding an average AUC of approximately 0.69 and an accuracy of 62.9%. This performance revealed that while audio features contain predictive signals, the relationship between these features and popularity is not strictly linear. Regularization (specifically L2, which is the default in scikit-learn) was necessary to handle the high dimensionality introduced by the one-hot encoded genre features, preventing the model from overfitting to the noise in the sparse data and allowing for the interpretation of feature importance via coefficient magnitude.
+
+v. How were KNN, decision trees, or random forest used for classification on your data? What method worked best for your data and why was it good for the problem you were addressing?
+
+For the non-linear classification tasks, Decision Trees and Random Forests were utilized to capture complex feature interactions that linear models miss, such as how high "energy" might correlate positively with popularity in the Rock genre but negatively in Classical. While K-Nearest Neighbors (KNN) theoretically groups similar songs, it often struggles with this dataset due to the "curse of dimensionality" introduced by the numerous genre columns. Consequently, the Random Forest method typically worked best for this problem. By aggregating the predictions of hundreds of independent decision trees, the Random Forest model effectively reduced the variance and overfitting inherent in single decision trees, providing a robust mechanism to model the complex, non-linear boundaries that define music popularity.
 
 vi. How were PCA and clustering applied on your data? What method worked best for your data and why was it good for the problem you were addressing? 
+
+PCA allowed us to compress the features from 109 to 76 componenets, vastly reducing the dimensionality of our data, which allowed us to address the high dimensionality issue due to one hot encoding track_genre.
 
 ### Neural Networks
 
@@ -146,7 +162,6 @@ Please refer to the main document for the application of a neural network.
 ### Hyperparameter Tuning
 
 Please refer to the main document for hyperparameter tuning.
-
 
 2. Code in Jupyter Notebooks- 50 points
 
