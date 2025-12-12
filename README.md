@@ -6,9 +6,10 @@ For our project, we selected the Spotify Prediction Dataset, sourced from Spotif
 
 Our primary goal for this project is to develop a model that can predict track popularity, using audio features as our predictor variables. This task is highly complex, as there are dozens of factors that contribute to a track’s popularity, many of which are not included in the dataset (for example, the extent to which a song is promoted prior to release would likely have influence on its popularity; our analysis won’t be able to capture this). Given the limiting nature of solely relying on genre and audio features, the objective becomes identifying data variables that demonstrate a consistent association with popularity. We are also interested to see how different modeling approaches handle this noisy setting.
 
+
 ## Key Methodology
 
-Throughout our analysis, we explored several models of varying complexity and type with the goal of ultimately cross-referencing key model performance metrics across model types to identify the highest performing model. The models include several linear models as well as a neural network. Our Ordinary Least Squares regression model had the most predictive power/strongest interpretability across our linear models.
+Throughout our analysis, we explored several models of varying complexity and type with the goal of ultimately cross-referencing key model performance metrics across model types to identify the highest performing model. The models include several linear models as well as a neural network. Our regression model with Lasso had the most predictive power/strongest interpretability across our linear models.
 
 ### Exploratory Data Analysis
 
@@ -26,7 +27,7 @@ All continuous features were standardized prior to modeling. PCA was applied aft
 
 ### Regression
 
-This project investigated several regression models to check their ability to predict popularity. These include an unregularized Ordinary Least Squares (OLS) and Least Absolute Deviation (LAD) regression, along with Lasso and Ridge regularization on an Ordinary Least Squares model. 
+This project investigated several regression models to check their ability to predict popularity. These include an unregularized  Least Squares (OLS) and Least Absolute Deviation (LAD) regression, along with Lasso and Ridge regularization on an  Least Squares model. 
 
 #### Unregularized Models
 
@@ -66,7 +67,7 @@ Models were evaluated using a consistent training–validation framework.
 For Ordinary Least Squares, the R<sup>2</sup>, MSE, MAE, and RMSE are 0.55, 140.91, 9.11, and 11.87, respectively. The cross-validation graph is given below.
 
 <p align="center">
-  <img src="https://github.com/will-mccormack/CS-M148-Proj/blob/main/assets/ols_final.png" width="400">
+  <img src="https://github.com/will-mccormack/CS-M148-Proj/blob/main/assets/olsv2.png" width="400">
 </p>
 
 Since the cross-validation score is minimized with degree 1, a model with degree 1 is the better model with an rMSE of about 11.8.
@@ -76,7 +77,7 @@ Since the cross-validation score is minimized with degree 1, a model with degree
 For LAD regression, the R<sup>2</sup>, MSE, MAE, and RMSE are 0.50, 153.98, 8.67, and 12.41, respectively. The cross-validation graph is given below.
 
 <p align="center">
-  <img src="https://github.com/will-mccormack/CS-M148-Proj/blob/main/assets/lad.png" width="400">
+  <img src="https://github.com/will-mccormack/CS-M148-Proj/blob/main/assets/ladv2.png" width="400">
 </p>
 
 Since the cross-validation score is minimized with degree 2, a model with degree 2 is the better model with an rMSE of about 11.9. However, this is still slightly worse than Ordinary Least Squares.
@@ -86,7 +87,7 @@ Since the cross-validation score is minimized with degree 2, a model with degree
 The graph of the cross-validation scores versus the alpha values is given below.
 
 <p align="center">
-  <img src="https://github.com/will-mccormack/CS-M148-Proj/blob/main/assets/lasso.png" width="400">
+  <img src="https://github.com/will-mccormack/CS-M148-Proj/blob/main/assets/lassov2.png" width="400">
 </p>
 
 The value of alpha that minimizes the cross-validation score is 0.1, and the value of alpha that minimizes the cross-validation score with 1 standard error is 0.14.
@@ -98,7 +99,7 @@ By fitting a model using the alpha that minimizes the cross-validation score, th
 The graph of the cross-validation scores versus the log-alpha values is given below.
 
 <p align="center">
-  <img src="https://github.com/will-mccormack/CS-M148-Proj/blob/main/assets/ridge.png" width="400">
+  <img src="https://github.com/will-mccormack/CS-M148-Proj/blob/main/assets/ridgev2.png" width="400">
 </p>
 
 The value of alpha that minimizes the cross-validation score is 2848.04, and the value of alpha that minimizes the cross-validation score with 1 standard error is 27825.59.
@@ -139,7 +140,7 @@ Limitations: Despite being our best performer, the Neural Network approach has i
 
 ## How to Use the Code [Final]
 
-All project code is available in the GitHub repository and can be run through Jupyter. The main workflow is contained in Final_Project_Main.ipynb, which loads the prepared datasets, applies preprocessing steps, and fits the primary models, regression and the neural network. Running this notebook in full will reproduce the results and evaluation metrics we report. Additional notebooks in our repository document some intermediate experiments but in general are not a significant part of our final workflow.
+All project code is available in the GitHub repository and can be run through Jupyter. The main workflow is contained in Final_Project_Main_v8.ipynb, which loads the prepared datasets, applies preprocessing steps, and fits the primary models, regression and the neural network. Running this notebook in full will reproduce the results and evaluation metrics we report. Additional notebooks in our repository document some intermediate experiments but in general are not a significant part of our final workflow.
 
 
 ## Appendix:
