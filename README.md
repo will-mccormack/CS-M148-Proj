@@ -120,7 +120,25 @@ We utilized 5-Fold Cross-Validation to verify the robustness of our Neural Netwo
 
 <img width="859" height="547" alt="image" src="https://github.com/user-attachments/assets/8e86c5d8-da44-4cd1-9e42-c392472225b9" />
 
-## How to Use the Code
+##### Model Comparison
+
+**Key Metrics for NN:**
+
+RMSE (Root Mean Squared Error): ~11.30. On a scale of 0-100, our model’s predictions are, on average, within 11 points of the true popularity score. This is a practical level of accuracy for distinguishing between a "hit" (80+) and a "flop" (20), though it may struggle to differentiate between moderately popular tracks (e.g., 50 vs. 60).
+
+R2 Score: 0.5901. Our model explains approximately 59% of the variance in a song's popularity using only audio features.
+
+We selected the Neural Network as our final model because it demonstrated a superior ability to capture the non-linear complexity of the music market.
+
+Failure of Linear Models: Our initial baseline experiments with Linear and Ridge Regression yielded lower R2 scores.
+
+Success of Neural Networks: By using non-linear activation functions (SiLU) and deep layers, the Neural Network learned these complex feature interactions. This capability allowed us toimprove the predictive power compared to regression, showing that the relationship between sound and popularity can be non-linear.
+
+Limitations: Despite being our best performer, the Neural Network approach has inherent limitations:
+- Interpretability: Unlike linear regression, where we can look at coefficients to say which features are the most important, the Neural Network is a "black box." It is difficult to isolate exactly why it predicts a specific score for a specific song.
+- The "Data Ceiling": Our performance plateaued at an R2 of ~0.60 regardless of architecture changes. This indicates a limitation of the dataset itself rather than the model. Audio features alone cannot account for external factors like marketing budgets, artist fame, release timing, and cultural trends, which likely drive the remaining 40% of the variance.
+
+## How to Use the Code [Final]
 
 All project code is available in the GitHub repository and can be run through Jupyter. The main workflow is contained in Final_Project_Main_v8.ipynb, which loads the prepared datasets, applies preprocessing steps, and fits the primary models, regression and the neural network. Running this notebook in full will reproduce the results and evaluation metrics we report. Additional notebooks in our repository document some intermediate experiments but in general are not a significant part of our final workflow.
 
@@ -139,15 +157,15 @@ Please refer to the main document for data pre-processing and feature engineerin
 
 Please refer to the main document for a discussion of how regression analysis was applied to the project.
 
-iv. How was logistic regression analysis applied in your project? What did you learn about your data set from this analysis and were you able to use this analysis for feature importance? Was regularization needed?
+### Logistic Regression and Regularization
 
 Logistic regression was applied as a binary classification framework to distinguish between "popular" and "unpopular" tracks, utilizing a specific threshold to binarize the continuous popularity score. To address the dataset's imbalance, where unpopular songs significantly outnumber hits, the model employed class_weight='balanced', which adjusts the loss function to penalize misclassifying the minority class more heavily. The analysis was validated using 5-Fold Cross-Validation, yielding an average AUC of approximately 0.69 and an accuracy of 62.9%. This performance revealed that while audio features contain predictive signals, the relationship between these features and popularity is not strictly linear. Regularization (specifically L2, which is the default in scikit-learn) was necessary to handle the high dimensionality introduced by the one-hot encoded genre features, preventing the model from overfitting to the noise in the sparse data and allowing for the interpretation of feature importance via coefficient magnitude.
 
-v. How were KNN, decision trees, or random forest used for classification on your data? What method worked best for your data and why was it good for the problem you were addressing?
+### Classification
 
 For the non-linear classification tasks, Decision Trees and Random Forests were utilized to capture complex feature interactions that linear models miss, such as how high "energy" might correlate positively with popularity in the Rock genre but negatively in Classical. While K-Nearest Neighbors (KNN) theoretically groups similar songs, it often struggles with this dataset due to the "curse of dimensionality" introduced by the numerous genre columns. Consequently, the Random Forest method typically worked best for this problem. By aggregating the predictions of hundreds of independent decision trees, the Random Forest model effectively reduced the variance and overfitting inherent in single decision trees, providing a robust mechanism to model the complex, non-linear boundaries that define music popularity.
 
-### PCA
+### PCA and Clustering
 
 PCA allowed us to compress the features from 109 to 76 componenets, vastly reducing the dimensionality of our data, which allowed us to address the high dimensionality issue due to one hot encoding track_genre.
 
