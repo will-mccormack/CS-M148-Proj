@@ -50,7 +50,7 @@ Train the Neural Network using 5-Fold Cross-Validation.
 
 Generate Loss curves and Prediction scatter plots.
 
-2. Appendix
+## 2. Appendix
 
 i. Exploratory Data Analysis (EDA)
 
