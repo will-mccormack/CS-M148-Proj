@@ -1,6 +1,6 @@
 ## Dataset Description [FINAL]
 
-For our project, we selected the Spotify Prediction Dataset, sourced from Spotify’s Web API. This dataset is vast and high-dimensional: it contains 114,000 tracks across 125 genres with 20 features total. Each track has its own row and represents an observational unit. The most relevant columns consist of audio features, including but not limited to danceability, energy, loudness, and tempo, all of which are continuous variables scored from 0-100. Our response variable is Popularity, which Spotify computes algorithmically per track and is primarily based on number of plays and how recent those plays were (also measured on a 0-100 scale). Other columns provide information about track metadata, such as track_id, artists, duration_ms. Various adjustments were made to the original dataset for usability purposes in our analysis, all of which are detailed in the following sections.
+For our project, we selected the Spotify Prediction Dataset, sourced from Spotify’s Web API. This dataset is vast and high-dimensional: it contains 114,000 tracks across 125 genres with 20 features total. Each track has its own row and represents an observational unit. The most relevant columns consist of audio features, including but not limited to danceability, energy, loudness, and tempo, all of which are continuous variables scored from 0-100. Our response variable is "popularity," which Spotify computes algorithmically per track and is primarily based on the number of plays and how recent those plays were (also measured on a 0-100 scale). Other columns provide information about track metadata, such as track_id, artists, and duration_ms. Various adjustments were made to the original dataset for usability purposes in our analysis, all of which are detailed in the following sections.
 
 ## Problem Overview [FINAL]
 
@@ -9,38 +9,53 @@ Our primary goal for this project is to develop a model that can predict track p
 
 ## Key Methodology [UPDATES NEEDED]
 
-Throughout our analysis, we explored several models of varying complexity and type with the goal of ultimately cross-referencing key model performance metrics across model types to identify the highest performing model. [Include regression info here]. Our Ridge regression model had the most predictive power/strongest interpretability across our linear models.
+Throughout our analysis, we explored several models of varying complexity and type with the goal of ultimately cross-referencing key model performance metrics across model types to identify the highest performing model. The models include several linear models as well as a neural network. Our Ordinary Least Squares regression model had the most predictive power/strongest interpretability across our linear models.
 
 [Info needed on other models not referenced here]
 
+### Exploratory Data Analysis
+
+Exploratory data analysis was used to examine feature distributions and their relationships with popularity. Histograms and summary statistics revealed large differences in scale and variability across audio features, motivating feature standardization. Exploration of popularity showed weak linear relationships with individual features, suggesting that predictive signal is distributed across many variables and may be nonlinear.
+
+Structural analysis revealed that many tracks appeared multiple times with identical audio features but different genre labels, introducing redundancy. The combination of numerous continuous features and categorical genre indicators also implied a high-dimensional and potentially correlated feature space. These observations motivated later preprocessing decisions, including duplicate consolidation, dimensionality reduction, and careful data splitting. Analysis of the explicit label was conducted for auxiliary classification experiments, but the primary focus remained on popularity prediction.
+
+### Data Pre-processing and Feature Engineering
+
+Preprocessing steps were informed by exploratory findings and model requirements. Low-signal metadata columns were removed, and categorical genre information was encoded using one-hot encoding. Duplicate tracks with identical audio features were grouped together, and their genre indicators were merged to reduce redundancy while preserving multi-genre information.
+
+All continuous features were standardized prior to modeling. PCA was applied after scaling and fit only on the training data to reduce dimensionality and mitigate multicollinearity, particularly for neural network training. The resulting feature representations were used consistently across training and validation sets. No synthetic data augmentation was performed; feature engineering focused on improving representation quality and stability.
+
 ### Regression
 
-This projected investigated several regression models to check their ability to predict popularity. These include an unregularized Ordinary Least Squares (OLS) and Least Absolute Deviation (LAD) regression, along with Lasso and Ridge regularization on an Ordinary Least Squares model. 
+This project investigated several regression models to check their ability to predict popularity. These include an unregularized Ordinary Least Squares (OLS) and Least Absolute Deviation (LAD) regression, along with Lasso and Ridge regularization on an Ordinary Least Squares model. 
 
 #### Unregularized Models
 
-All the data used was scaled because of the various ranges between difference features.
+All the data used was scaled because of the various ranges between different features.
 
 ##### Ordinary Least Squares Regression
 
-The Ordinary Least Squares model was generated using sklearn's LinearRegression function, creating a fit using the training data, and making predictions using the testing data. Afterwords, the model can be evaluated with metrics including, R<sup>2</sup>, mean squared error (MSE), mean absolute error (MAE), and root mean squared error (rMSE). Then, through k-fold cross validation, it can be determined what degree the model should be to best produce a fit. To reduce computational intensity, 3 folds were used, and two degrees were checked.
+The Ordinary Least Squares model was generated using sklearn's LinearRegression function, creating a fit using the training data, and making predictions using the testing data. Afterwards, the model can be evaluated with metrics including, R<sup>2</sup>, mean squared error (MSE), mean absolute error (MAE), and root mean squared error (rMSE). Then, through k-fold cross-validation, it can be determined what degree the model should be to best produce a fit. To reduce computational intensity, 3 folds were used, and two degrees were checked.
 
 ##### Least Absolute Deviation Regression
 
-The methodology for LAD regression is similar to Ordinary Least Squares Regression, but instead, sklearn's QuantileRegressor function with the quantile parameter set equal to 0.5 is used. Again, fit and predict, and calculate the metrics stated in the Ordinary Least Squares Regression subsection.  For cross-validation, like OLS, 3 folds were used, and two degrees were checked.
+The methodology for LAD regression is similar to Ordinary Least Squares Regression, but instead, sklearn's QuantileRegressor function with the quantile parameter set equal to 0.5 is used. Again, fit and predict, and calculate the metrics stated in the Ordinary Least Squares Regression subsection.  For cross-validation, 2 folds were used, and two degrees were checked.
 
 #### Regularized Models
 
 ##### Lasso
 
-10-fold cross validation is used to select the best regularization hyperparameter for Lasso regularization by importing Lasso from sklearn. The goal is to find an alpha that results in the minimum cross-validation score and an alpha minimize the score within 1 standard error. Afterwards, we can fit models using the optimal alpha values and calculate the relevant metrics.
+10-fold cross-validation is used to select the best regularization hyperparameter for Lasso regularization by importing Lasso from sklearn. The goal is to find an alpha that results in the minimum cross-validation score and an alpha that minimizes the score within 1 standard error. Afterwards, we can fit models using the optimal alpha values and calculate the relevant metrics.
 
 ##### Ridge
 
-The process for Ridge regularization is the same as Lasso regularization but instead, Ridge from sklearn is used. As before, find the hyperparamter value that minimizes the cross-validation score and miniize the score within 1 standard error. Then, we can fit models using the optimal alpha values and obtain the metrics.
+The process for Ridge regularization is the same as Lasso regularization, but instead, Ridge from sklearn is used. As before, find the hyperparameter value that minimizes the cross-validation score and minimize the score within 1 standard error. Then, we can fit models using the optimal alpha values and obtain the metrics.
 
+#### Neural Networks
 
 We also trained a feedforward neural network to capture nonlinear relationships between audio features and popularity. We applied PCA to scaled features before neural network training to mitigate the effects of the data’s inherent high-dimensionality as well as the dimensionality increase caused by genre encoding. We trained the neural network using a validation set with early stopping and performed hyperparameter tuning to determine an optimal learning rate. 
+
+Note that feature importance involving regularization was applied when Lasso and Ridge regularization were applied, but not the unregularized models, where keeping more features were favored over reducing complexity.
 
 
 ## Results [UPDATES NEEDED]
@@ -49,41 +64,74 @@ Models were evaluated using a consistent training–validation framework. The me
 
 ##### Ordinary Least Squares Regression
 
-For ordinary least squares, the R<sup>2</sup>, MSE, MAE, and RMSE were 0.5478, 140.18, 9.08, and 11.84, respectively. The cross-validation graph is given below.
+For Ordinary Least Squares, the R<sup>2</sup>, MSE, MAE, and RMSE are 0.55, 140.18, 9.08, and 11.84, respectively. The cross-validation graph is given below.
+
+<p align="center">
+  <img src="https://github.com/will-mccormack/CS-M148-Proj/blob/main/assets/ols_cv.png" width="400">
+</p>
+
+Since the cross-validation score is minimized with degree 1, a model with degree 1 is the better model with an rMSE of about 11.8.
 
 ##### Least Absolute Deviation Regression
 
-For LAD regression, the R<sup>2</sup>, MSE, MAE, and RMSE were 0.5478, 140.18, 9.08, and 11.84, respectively. The cross-validation graph is given below.
+For LAD regression, the R<sup>2</sup>, MSE, MAE, and RMSE are 0.49, 157.40, 8.68, and 12.55, respectively. The cross-validation graph is given below.
+
+<p align="center">
+  <img src="https://github.com/will-mccormack/CS-M148-Proj/blob/main/assets/lad.png" width="400">
+</p>
+
+Since the cross-validation score is minimized with degree 2, a model with degree 2 is the better model with an rMSE of about 12.0. However, this is still slightly worse than Ordinary Least Squares.
 
 ##### Lasso
 
+The graph of the cross-validation scores versus the alpha values is given below.
+
+<p align="center">
+  <img src="https://github.com/will-mccormack/CS-M148-Proj/blob/main/assets/lasso.png" width="400">
+</p>
+
+The value of alpha that minimizes the cross-validation score is 0.1, and the value of alpha that minimizes the cross-validation score with 1 standard error is 0.14.
+
+By fitting a model using the alpha that minimizes the cross-validation score, the rMSE, R<sup>2</sup>, MAE, and MSE are 0.55, 140.69, 9.22, and 11.86, respectively. If the alpha that minimizes the cross-validation score within 1 standard error is used instead, the cross-validation score, the rMSE, R<sup>2</sup>, MAE, and MSE are 0.54, 141.97, 9.31, and 11.91, respectively.
+
 ##### Ridge
 
+The graph of the cross-validation scores versus the log-alpha values is given below.
 
-The neural network achieved the lowest validation RMSE and highest R-squared among the models considered, indicating as expected that nonlinear interactions and genre effects contribute additionally towards full predictive power. However, overall R-squared values remained moderate, reflecting the inherent limitations of predicting popularity from audio features alone. For this reason, Ridge regression is used primarily for interpretability, while the neural network is treated as the strongest predictive model within the scope of the dataset.
+<p align="center">
+  <img src="https://github.com/will-mccormack/CS-M148-Proj/blob/main/assets/ridge.png" width="400">
+</p>
+
+The value of alpha that minimizes the cross-validation score is 2848.04, and the value of alpha that minimizes the cross-validation score with 1 standard error is 27825.59.
+
+By fitting a model using the alpha that minimizes the cross-validation score, the rMSE, R<sup>2</sup>, MAE, and MSE were 0.55, 140.30, 9.18, and 11.84, respectively. If the alpha that minimizes the cross-validation score within 1 standard error is used instead, the cross-validation score, the rMSE, R<sup>2</sup>, MAE, and MSE were 0.48, 161.15, 10.33, and 12.69, respectively.
+
+Lasso and Ridge Regression allows for the investigation of feature importance. [talk about use in nn]
+
+Based on the metrics obtained, Ordinary Least Squares provides the best predictions out of the linear models. However, depending on whether one desires marginally greater accuracy with greater model complexity, choosing the Ridge model would also be reasonable.
+
+##### Neural Network
+
+The neural network achieved the lowest validation RMSE and highest R-squared among the models considered, indicating, as expected that nonlinear interactions and genre effects contribute additionally towards full predictive power. However, overall R-squared values remained moderate, reflecting the inherent limitations of predicting popularity from audio features alone. For this reason, the neural network is treated as the strongest predictive model within the scope of the dataset.
 
 ## How to Use the Code [Final]
 
 All project code is available in the GitHub repository and can be run through Jupyter. The main workflow is contained in Final_Project_Main.ipynb, which loads the prepared datasets, applies preprocessing steps, and fits the primary models, regression and the neural network. Running this notebook in full will reproduce the results and evaluation metrics we report. Additional notebooks in our repository document some intermediate experiments but in general are not a significant part of our final workflow.
 
 
-(b) Appendix:
+## Appendix:
 
-(i) Exploratory Data Analysis [UPDATES NEEDED]
+### Exploratory Data Analysis
 
-Exploratory data analysis was used to examine feature distributions and their relationships with popularity. Histograms and summary statistics revealed large differences in scale and variability across audio features, motivating feature standardization. Exploration of popularity showed weak linear relationships with individual features, suggesting that predictive signal is distributed across many variables and may be nonlinear.
+Please refer to the main document for exploratory data analysis procedures.
 
-Structural analysis revealed that many tracks appeared multiple times with identical audio features but different genre labels, introducing redundancy. The combination of numerous continuous features and categorical genre indicators also implied a high-dimensional and potentially correlated feature space. These observations motivated later preprocessing decisions including duplicate consolidation, dimensionality reduction, and careful data splitting. Analysis of the explicit label was conducted for auxiliary classification experiments, but the primary focus remained on popularity prediction.
+### Data Pre-processing and Feature Engineering
 
-(ii) Data Pre-processing and Feature Engineering [UPDATES NEEDED]
-
-Preprocessing steps were informed by exploratory findings and model requirements. Low-signal metadata columns were removed, and categorical genre information was encoded using one-hot encoding. Duplicate tracks with identical audio features were grouped together and their genre indicators merged to reduce redundancy while preserving multi-genre information.
-
-All continuous features were standardized prior to modeling. PCA was applied after scaling and fit only on the training data to reduce dimensionality and mitigate multicollinearity, particularly for neural network training. The resulting feature representations were used consistently across training and validation sets. No synthetic data augmentation was performed; feature engineering focused on improving representation quality and stability.
+Please refer to the main document for data pre-processing and feature engineering.
 
 ***TODO:***
 
-iii. How was regression analysis applied in your project? What did you learn about your data set from this analysis and were you able to use this analysis for feature importance? Was regularization needed?
+### Regression and Regularization
 
 Please refer to the main document for a discussion of how regression analysis was applied to the project.
 
@@ -91,11 +139,11 @@ iv. How was logistic regression analysis applied in your project? What did you l
 
 vi. How were PCA and clustering applied on your data? What method worked best for your data and why was it good for the problem you were addressing? 
 
-vii. Explain how your project attempted to use a neural network on the data and the results of that attempt.
+### Neural Networks
 
 Please refer to the main document for the application of a neural network.
 
-viii. Give examples of hyperparameter tuning that you applied in preparing your project and how you chose the best parameters for models.
+### Hyperparameter Tuning
 
 Please refer to the main document for hyperparameter tuning.
 
