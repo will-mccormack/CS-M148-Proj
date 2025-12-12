@@ -13,6 +13,31 @@ Throughout our analysis, we explored several models of varying complexity and ty
 
 [Info needed on other models not referenced here]
 
+### Regression
+
+This projected investigated several regression models to check their ability to predict popularity. These include an unregularized Ordinary Least Squares and Least Absolute Deviation (LAD) regression, along with Lasso and Ridge regularization on an Ordinary Least Squares model. 
+
+#### Unregularized Models
+
+##### Ordinary Least Squares Regression
+
+The Ordinary Least Squares model was generated using sklearn's LinearRegression function, creating a fit using the training data, and making predictions using the testing data. Afterwords, the model can be evaluated with metrics including, R<sup>2</sup>, mean squared error (MSE), mean absolute error (MAE), and root mean squared error (rMSE). Then, through k-fold cross validation, it can be determined what degree the model should be to best produce a fit.
+
+##### Least Absolute Deviation Regression
+
+The methodology for LAD regression is similar to Ordinary Least Squares Regression, but instead, sklearn's LADRegression function is used. Again, fit and predict, and calculate the metrics stated in the Ordinary Least Squares Regression subsection.
+
+#### Regularized Models
+
+##### Lasso
+
+10-fold cross validation is used to select the best regularization hyperparameter for Lasso regularization by importing Lasso from sklearn. The goal is to find an alpha that results in the minimum cross-validation score and an alpha minimize the score within 1 standard error. Afterwards, we can fit models using the optimal alpha values and calculate the relevant metrics.
+
+##### Ridge
+
+The process for Ridge regularization is the same as Lasso regularization but instead, Ridge from sklearn is used. As before, find the hyperparamter value that minimizes the cross-validation score and miniize the score within 1 standard error. Then, we can fit models using the optimal alpha values and obtain the metrics.
+
+
 We also trained a feedforward neural network to capture nonlinear relationships between audio features and popularity. We applied PCA to scaled features before neural network training to mitigate the effects of the data’s inherent high-dimensionality as well as the dimensionality increase caused by genre encoding. We trained the neural network using a validation set with early stopping and performed hyperparameter tuning to determine an optimal learning rate. 
 
 
@@ -43,7 +68,9 @@ All continuous features were standardized prior to modeling. PCA was applied aft
 
 ***TODO:***
 
-iii. How was regression analysis applied in your project? What did you learn about your data set from this analysis and were you able to use this analysis for feature importance? Was regularization needed? 
+iii. How was regression analysis applied in your project? What did you learn about your data set from this analysis and were you able to use this analysis for feature importance? Was regularization needed?
+
+Please refer to the main document for a discussion of how regression analysis was applied to the project.
 
 iv. How was logistic regression analysis applied in your project? What did you learn about your data set from this analysis and were you able to use this analysis for feature importance? Was regularization needed? v. How were KNN, decision trees, or random forest used for classification on your data? What method worked best for your data and why was it good for the problem you were addressing? 
 
@@ -51,7 +78,11 @@ vi. How were PCA and clustering applied on your data? What method worked best fo
 
 vii. Explain how your project attempted to use a neural network on the data and the results of that attempt.
 
+Please refer to the main document for the application of a neural network.
+
 viii. Give examples of hyperparameter tuning that you applied in preparing your project and how you chose the best parameters for models.
+
+Please refer to the main document for hyperparameter tuning.
 
 
 2. Code in Jupyter Notebooks- 50 points
