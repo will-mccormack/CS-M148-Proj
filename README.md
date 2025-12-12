@@ -23,7 +23,7 @@ Structural analysis revealed that many tracks appeared multiple times with ident
 
 Preprocessing steps were informed by exploratory findings and model requirements. Low-signal metadata columns were removed, and categorical genre information was encoded using one-hot encoding. Duplicate tracks with identical audio features were grouped together, and their genre indicators were merged to reduce redundancy while preserving multi-genre information. In addition, after going thorugh the data pipeline, we evaluated the popularity metric and decided that values less than 5 contributed to noise, since the popularity metric algorithm is a measure of current popularity, without factoring in historical popularity which causes older songs as well as brand new songs to have an abnormally low popularity score. To deal with this noise, these songs are removed to allow a more predictable model to be trained.
 
-<img width="850" height="547" alt="image" src="https://github.com/user-attachments/assets/f81c929a-c79a-4143-a19a-178e3c2e71b1" />
+<img width="1023" height="547" alt="image" src="https://github.com/user-attachments/assets/a6902647-3f08-4939-98f8-a5fbe8488963" />
 
 All continuous features were standardized prior to modeling. PCA was applied after scaling and fit only on the training data to reduce dimensionality and mitigate multicollinearity, particularly for neural network training. The resulting feature representations were used consistently across training and validation sets. No synthetic data augmentation was performed; feature engineering focused on improving representation quality and stability.
 
