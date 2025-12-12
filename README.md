@@ -15,17 +15,19 @@ Throughout our analysis, we explored several models of varying complexity and ty
 
 ### Regression
 
-This projected investigated several regression models to check their ability to predict popularity. These include an unregularized Ordinary Least Squares and Least Absolute Deviation (LAD) regression, along with Lasso and Ridge regularization on an Ordinary Least Squares model. 
+This projected investigated several regression models to check their ability to predict popularity. These include an unregularized Ordinary Least Squares (OLS) and Least Absolute Deviation (LAD) regression, along with Lasso and Ridge regularization on an Ordinary Least Squares model. 
 
 #### Unregularized Models
 
+All the data used was scaled because of the various ranges between difference features.
+
 ##### Ordinary Least Squares Regression
 
-The Ordinary Least Squares model was generated using sklearn's LinearRegression function, creating a fit using the training data, and making predictions using the testing data. Afterwords, the model can be evaluated with metrics including, R<sup>2</sup>, mean squared error (MSE), mean absolute error (MAE), and root mean squared error (rMSE). Then, through k-fold cross validation, it can be determined what degree the model should be to best produce a fit.
+The Ordinary Least Squares model was generated using sklearn's LinearRegression function, creating a fit using the training data, and making predictions using the testing data. Afterwords, the model can be evaluated with metrics including, R<sup>2</sup>, mean squared error (MSE), mean absolute error (MAE), and root mean squared error (rMSE). Then, through k-fold cross validation, it can be determined what degree the model should be to best produce a fit. To reduce computational intensity, 3 folds were used, and two degrees were checked.
 
 ##### Least Absolute Deviation Regression
 
-The methodology for LAD regression is similar to Ordinary Least Squares Regression, but instead, sklearn's LADRegression function is used. Again, fit and predict, and calculate the metrics stated in the Ordinary Least Squares Regression subsection.
+The methodology for LAD regression is similar to Ordinary Least Squares Regression, but instead, sklearn's QuantileRegressor function with the quantile parameter set equal to 0.5 is used. Again, fit and predict, and calculate the metrics stated in the Ordinary Least Squares Regression subsection.  For cross-validation, like OLS, 3 folds were used, and two degrees were checked.
 
 #### Regularized Models
 
@@ -44,6 +46,19 @@ We also trained a feedforward neural network to capture nonlinear relationships 
 ## Results [UPDATES NEEDED]
 
 Models were evaluated using a consistent training–validation framework. The mean predictor and OLS regression showed limited ability to explain variation in popularity on held-out data. Ridge regression modestly reduced validation error and produced coefficients that were more stable across folds, making it suitable for interpretation.
+
+##### Ordinary Least Squares Regression
+
+For ordinary least squares, the R<sup>2</sup>, MSE, MAE, and RMSE were 0.5478, 140.18, 9.08, and 11.84, respectively. The cross-validation graph is given below.
+
+##### Least Absolute Deviation Regression
+
+For LAD regression, the R<sup>2</sup>, MSE, MAE, and RMSE were 0.5478, 140.18, 9.08, and 11.84, respectively. The cross-validation graph is given below.
+
+##### Lasso
+
+##### Ridge
+
 
 The neural network achieved the lowest validation RMSE and highest R-squared among the models considered, indicating as expected that nonlinear interactions and genre effects contribute additionally towards full predictive power. However, overall R-squared values remained moderate, reflecting the inherent limitations of predicting popularity from audio features alone. For this reason, Ridge regression is used primarily for interpretability, while the neural network is treated as the strongest predictive model within the scope of the dataset.
 
