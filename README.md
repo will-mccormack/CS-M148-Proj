@@ -16,15 +16,15 @@ Throughout our analysis, we explored several models of varying complexity and ty
 We also trained a feedforward neural network to capture nonlinear relationships between audio features and popularity. We applied PCA to scaled features before neural network training to mitigate the effects of the data’s inherent high-dimensionality as well as the dimensionality increase caused by genre encoding. We trained the neural network using a validation set with early stopping and performed hyperparameter tuning to determine an optimal learning rate. 
 
 
-(iv) Results [UPDATES NEEDED]
+## Results [UPDATES NEEDED]
 
 Models were evaluated using a consistent training–validation framework. The mean predictor and OLS regression showed limited ability to explain variation in popularity on held-out data. Ridge regression modestly reduced validation error and produced coefficients that were more stable across folds, making it suitable for interpretation.
 
-The neural network achieved the lowest validation RMSE and highest R-squared among the models considered, indicating that nonlinear interactions and genre effects contribute additional predictive signal. However, overall R-squared values remained moderate, reflecting the inherent limitations of predicting popularity from audio features alone. For this reason, Ridge regression is used primarily for interpretability, while the neural network is treated as the strongest predictive model within the scope of the dataset.
+The neural network achieved the lowest validation RMSE and highest R-squared among the models considered, indicating as expected that nonlinear interactions and genre effects contribute additionally towards full predictive power. However, overall R-squared values remained moderate, reflecting the inherent limitations of predicting popularity from audio features alone. For this reason, Ridge regression is used primarily for interpretability, while the neural network is treated as the strongest predictive model within the scope of the dataset.
 
-(v) How to Use the Code [UPDATES NEEDED]
+## How to Use the Code [Final]
 
-All project code is available in the GitHub repository and can be run through Jupyter. The main workflow is contained in Final_Project_Main.ipynb, which loads the prepared datasets, applies preprocessing steps, and fits the primary models including Ridge regression and the neural network. Running this notebook from start to finish reproduces the results and evaluation metrics reported here. Additional notebooks document exploratory analyses and intermediate experiments but are not required to reproduce the final results.
+All project code is available in the GitHub repository and can be run through Jupyter. The main workflow is contained in Final_Project_Main.ipynb, which loads the prepared datasets, applies preprocessing steps, and fits the primary models including Ridge regression and the neural network. Running this notebook in full will reproduce the results and evaluation metrics we report. Additional notebooks in our repository document some intermediate experiments but in general are not a signficant part of our final workflow.
 
 
 (b) Appendix:
