@@ -125,7 +125,7 @@ We utilized 5-Fold Cross-Validation to verify the robustness of our Neural Netwo
 
 RMSE (Root Mean Squared Error): ~11.30. On a scale of 0-100, our model’s predictions are, on average, within 11 points of the true popularity score. This is a practical level of accuracy for distinguishing between a "hit" (80+) and a "flop" (20), though it may struggle to differentiate between moderately popular tracks (e.g., 50 vs. 60).
 
-R2 Score: 0.588. Our model explains approximately 59% of the variance in a song's popularity using only audio features.
+R2 Score: 0.5901. Our model explains approximately 59% of the variance in a song's popularity using only audio features.
 
 We selected the Neural Network as our final model because it demonstrated a superior ability to capture the non-linear complexity of the music market.
 
