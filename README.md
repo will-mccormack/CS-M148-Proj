@@ -1,12 +1,11 @@
-(i) Dataset Description
+## Dataset Description
 
-Our analysis uses a Spotify tracks dataset containing audio features, genre information, and track popularity scores. The dataset includes continuous audio descriptors such as danceability, energy, loudness, speechiness, instrumentalness, valence, and tempo, along with categorical metadata including genre and explicitness. The primary response variable is Spotify popularity, measured on a 0–100 scale.
+For our project, we selected the Spotify Prediction Dataset, sourced from Spotify’s Web API. This dataset is vast and high-dimensional: it contains 114,000 tracks across 125 genres with 20 features total. Each track has its own row and represents an observational unit. The most relevant columns consist of audio features, including but not limited to danceability, energy, loudness, and tempo, all of which are continuous variables scored from 0-100. Our response variable is Popularity, which Spotify computes algorithmically per track and is primarily based on number of plays and how recent those plays were (also measured on a 0-100 scale). Other columns provide information about track metadata, such as track_id, artists, duration_ms. Various adjustments were made to the original dataset for usability purposes in our analysis, all of which are detailed in the following sections.
 
-Prior to modeling, uninformative or redundant identifiers were removed, numeric features were standardized when required, and categorical genre information was encoded for use in downstream models. Tracks with identical audio features but differing genre labels were consolidated to reduce redundancy. Consistent training and validation splits were used across all modeling tasks.
+## Problem Overview
 
-(ii) Problem Overview
+Our primary goal for this project is to develop a model that can predict track popularity, using audio features as our predictor variables. This task is highly complex, as there are dozens of factors that contribute to a track’s popularity, many of which are not included in the dataset (for example, the extent to which a song is promoted prior to release would likely have influence on its popularity; our analysis won’t be able to capture this). Given the limiting nature of solely relying on genre and audio features, the objective becomes identifying data variables that demonstrate a consistent association with popularity. We are also interested to see how different modeling approaches handle this noisy setting.
 
-The goal of this project is to predict track popularity using available audio characteristics and metadata. Popularity is influenced by many external factors not captured in the dataset, so the predictive signal available from audio features alone is limited. As a result, the objective is not to perfectly predict popularity, but to identify features that show consistent association with popularity and to evaluate how different modeling approaches handle this noisy setting.
 
 (iii) Key Methodology
 
