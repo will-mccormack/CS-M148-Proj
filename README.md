@@ -60,7 +60,7 @@ Note that feature importance involving regularization was applied when Lasso and
 
 ## Results [UPDATES NEEDED]
 
-Models were evaluated using a consistent training–validation framework. The mean predictor and OLS regression showed limited ability to explain variation in popularity on held-out data. Ridge regression modestly reduced validation error and produced coefficients that were more stable across folds, making it suitable for interpretation.
+Models were evaluated using a consistent training–validation framework.
 
 ##### Ordinary Least Squares Regression
 
