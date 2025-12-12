@@ -119,6 +119,24 @@ We utilized 5-Fold Cross-Validation to verify the robustness of our Neural Netwo
 
 <img width="859" height="547" alt="image" src="https://github.com/user-attachments/assets/8e86c5d8-da44-4cd1-9e42-c392472225b9" />
 
+##### Model Comparison
+
+**Key Metrics for NN:**
+
+RMSE (Root Mean Squared Error): ~11.30. On a scale of 0-100, our model’s predictions are, on average, within 11 points of the true popularity score. This is a practical level of accuracy for distinguishing between a "hit" (80+) and a "flop" (20), though it may struggle to differentiate between moderately popular tracks (e.g., 50 vs. 60).
+
+R2 Score: 0.588. Our model explains approximately 59% of the variance in a song's popularity using only audio features.
+
+We selected the Neural Network as our final model because it demonstrated a superior ability to capture the non-linear complexity of the music market.
+
+Failure of Linear Models: Our initial baseline experiments with Linear and Ridge Regression yielded R2 scores below 0.30. These models assume a straightforward relationship (e.g., "louder is always better"), which fails in music where context matters (e.g., high loudness is good for Rock but bad for Classical).
+
+Success of Neural Networks: By using non-linear activation functions (SiLU) and deep layers, the Neural Network learned these complex feature interactions. This capability allowed us to double the predictive power compared to regression (0.29→0.59), proving that the relationship between sound and popularity is highly non-linear.
+
+Limitations: Despite being our best performer, the Neural Network approach has inherent limitations:
+- Interpretability: Unlike linear regression, where we can look at coefficients to say "Loudness is the #1 factor," the Neural Network is a "black box." It is difficult to isolate exactly why it predicts a specific score for a specific song.
+- The "Data Ceiling": Our performance plateaued at an R2 of ~0.60 regardless of architecture changes. This indicates a limitation of the dataset itself rather than the model. Audio features alone cannot account for external factors like marketing budgets, artist fame, release timing, and cultural trends, which likely drive the remaining 40% of the variance.
+
 ## How to Use the Code [Final]
 
 All project code is available in the GitHub repository and can be run through Jupyter. The main workflow is contained in Final_Project_Main.ipynb, which loads the prepared datasets, applies preprocessing steps, and fits the primary models, regression and the neural network. Running this notebook in full will reproduce the results and evaluation metrics we report. Additional notebooks in our repository document some intermediate experiments but in general are not a significant part of our final workflow.
