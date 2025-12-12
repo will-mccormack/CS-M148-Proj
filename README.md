@@ -67,7 +67,7 @@ Models were evaluated using a consistent training–validation framework. The me
 For Ordinary Least Squares, the R<sup>2</sup>, MSE, MAE, and RMSE are 0.55, 140.18, 9.08, and 11.84, respectively. The cross-validation graph is given below.
 
 <p align="center">
-  <img src="https://github.com/will-mccormack/CS-M148-Proj/blob/main/assets/ols_cv.png" width="400">
+  <img src="https://github.com/will-mccormack/CS-M148-Proj/blob/main/assets/ols_final.png" width="400">
 </p>
 
 Since the cross-validation score is minimized with degree 1, a model with degree 1 is the better model with an rMSE of about 11.8.
