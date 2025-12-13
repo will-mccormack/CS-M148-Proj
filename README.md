@@ -110,6 +110,8 @@ Lasso and Ridge Regression allows for the investigation of feature importance. [
 
 Based on the metrics obtained, the model with Lasso provides the best predictions out of the linear models.
 
+Limitations: Linear models are limited by the fact that they cannot as easily model nonlinear trends as nonlinear models. Furthermore, between the different linear models, Ordinary Least Squares is sensitive to outliers, while LAD has the issue of it having no closed form, making it slow. Between Lasso and Ridge regression, Lasso is good because it bering less important coefficients to zero while Ridge only bring the coefficients close to zero. The disadvantage of Lasso is that minimization is more complex than Ridge.
+
 ### Neural Network
 
 The neural network achieved a respectable validation RMSE of 11.27 and highest R-squared among the models considered, with a value of 0.5901, indicating, as expected that nonlinear interactions and genre effects contribute additionally towards full predictive power. However, overall R-squared values remained moderate, reflecting the inherent limitations of predicting popularity from audio features alone, without factoring artist or popularity trends over years. For this reason, the neural network is treated as the strongest predictive model within the scope of the dataset.
@@ -138,7 +140,7 @@ Limitations: Despite being our best performer, the Neural Network approach has i
 - Interpretability: Unlike linear regression, where we can look at coefficients to say which features are the most important, the Neural Network is a "black box." It is difficult to isolate exactly why it predicts a specific score for a specific song.
 - The "Data Ceiling": Our performance plateaued at an R2 of ~0.60 regardless of architecture changes. This indicates a limitation of the dataset itself rather than the model. Audio features alone cannot account for external factors like marketing budgets, artist fame, release timing, and cultural trends, which likely drive the remaining 40% of the variance.
 
-## How to Use the Code [Final]
+## How to Use the Code
 
 All project code is available in the GitHub repository and can be run through Jupyter. The main workflow is contained in Final_Project_Main_v8.ipynb, which loads the prepared datasets, applies preprocessing steps, and fits the primary models, regression and the neural network. Running this notebook in full will reproduce the results and evaluation metrics we report. Additional notebooks in our repository document some intermediate experiments but in general are not a significant part of our final workflow.
 
