@@ -53,12 +53,11 @@ The methodology for LAD regression is similar to Ordinary Least Squares Regressi
 
 The process for Ridge regularization is the same as Lasso regularization, but instead, Ridge from sklearn is used. As before, find the hyperparameter value that minimizes the cross-validation score and minimize the score within 1 standard error. Then, we can fit models using the optimal alpha values and obtain the metrics.
 
+Note that feature importance involving regularization was applied when Lasso and Ridge regularization were applied, but not the unregularized models, where keeping more features were favored over reducing complexity.
+
 #### Neural Networks
 
 We also trained a feedforward neural network to capture nonlinear relationships between audio features and popularity. We applied PCA to scaled features before neural network training to mitigate the effects of the data’s inherent high-dimensionality as well as the dimensionality increase caused by genre encoding. From our testing we evaluated that 80% of the explained variance ratio can allow us reduce dimensionality without compromising the performance of our model. We trained the neural network using a validation set with early stopping and performed hyperparameter tuning to determine an optimal learning rate. The layers utilized dropout as a regularization tool to prevent overfitting. 
-
-Note that feature importance involving regularization was applied when Lasso and Ridge regularization were applied, but not the unregularized models, where keeping more features were favored over reducing complexity.
-
 
 ## Results
 
