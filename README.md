@@ -84,7 +84,7 @@ Since the cross-validation score is minimized with degree 2, a model with degree
 
 ### Lasso
 
-The graph of the cross-validation scores versus the alpha values is given below.
+The graph of the cross-validation scores versus the log-alpha values is given below.
 
 <p align="center">
   <img src="https://github.com/will-mccormack/CS-M148-Proj/blob/main/assets/lassov2.png" width="400">
