@@ -55,7 +55,7 @@ The process for Ridge regularization is the same as Lasso regularization, but in
 
 Note that feature importance involving regularization was applied when Lasso and Ridge regularization were applied, but not the unregularized models, where keeping more features was favored over reducing complexity.
 
-#### Neural Networks
+### Neural Networks
 
 We also trained a feedforward neural network to capture nonlinear relationships between audio features and popularity. We applied PCA to scaled features before neural network training to mitigate the effects of the data’s inherent high-dimensionality as well as the dimensionality increase caused by genre encoding. From our testing we evaluated that 80% of the explained variance ratio can allow us to reduce dimensionality without compromising the performance of our model. We trained the neural network using a validation set with early stopping and performed hyperparameter tuning to determine an optimal learning rate. The layers utilized dropout as a regularization tool to prevent overfitting. 
 
