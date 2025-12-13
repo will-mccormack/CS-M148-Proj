@@ -106,7 +106,7 @@ The value of alpha that minimizes the cross-validation score is 2848.04, and the
 
 By fitting a model using the alpha that minimizes the cross-validation score, the rMSE, R<sup>2</sup>, MAE, and MSE were 0.55, 140.52, 9.18, and 11.85, respectively. If the alpha that minimizes the cross-validation score within 1 standard error is used instead, the cross-validation score, the rMSE, R<sup>2</sup>, MAE, and MSE were 0.48, 161.79, 10.38, and 12.72, respectively.
 
-Lasso and Ridge Regression allows for the investigation of feature importance. [talk about use in nn]
+Lasso and Ridge Regression allows for the investigation of feature importance. After performing Lasso Regularization, we found the coefficients of 18 features to be zero, indicating that thosae features have a very insignificant importance to our data. Therefore, we dropped these features from our dataset, which was then used for our neural network training.
 
 Based on the metrics obtained, the model with Lasso provides the best predictions out of the linear models.
 
@@ -169,7 +169,7 @@ For the non-linear classification tasks, Decision Trees and Random Forests were 
 
 ### PCA and Clustering
 
-PCA allowed us to compress the features from 109 to 76 componenets, vastly reducing the dimensionality of our data, which allowed us to address the high dimensionality issue due to one hot encoding track_genre.
+PCA allowed us to compress the features from 109 to 76 componenets, vastly reducing the dimensionality of our data, which allowed us to address the high dimensionality issue due to one hot encoding track_genre. We did not use clustering because our goal was to create a predictive model, which clustering does not contribute towards.
 
 ### Neural Networks
 
